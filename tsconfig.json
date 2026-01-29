@@ -14,16 +14,16 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "noEmit": true,
     "incremental": true,
     "esModuleInterop": true,
-
-    "baseUrl": ".",                 // ADD THIS
-    "paths": {                      // ADD THIS
-      "@/*": ["./*"]
+    "baseUrl": ".", // ADD THIS
+    "paths": { // ADD THIS
+      "@/*": [
+        "./*"
+      ]
     },
-
     "plugins": [
       {
         "name": "next"
@@ -37,6 +37,7 @@
     "**/*.ts",
     "**/*.tsx",
     "next-env.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
   ]
 }
