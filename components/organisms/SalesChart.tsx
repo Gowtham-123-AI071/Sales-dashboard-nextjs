@@ -24,9 +24,16 @@ export default function SalesChart({ year }: { year: number }) {
   const [chartType, setChartType] = useState('Bar');
   const [threshold, setThreshold] = useState<number | ''>('' as any);
 
+  // keep input text only
+  const [inputValue, setInputValue] = useState('');
+
   const data = useMemo(() => {
     const filtered = allSales.filter(s => s.year === year);
-    if (threshold !== '') return filtered.filter(f => f.sales >= Number(threshold));
+
+    // ✅ FIXED: only threshold controls filter
+    if (threshold !== '')
+      return filtered.filter(f => f.sales >= Number(threshold));
+
     return filtered;
   }, [threshold, year]);
 
@@ -39,12 +46,32 @@ export default function SalesChart({ year }: { year: number }) {
 
   return (
     <ChartCard title={`Sales - ${year}`}>
+
+      {/* controls */}
       <div className="flex items-center gap-3 mb-4">
-        <ToggleGroup value={chartType} onChange={setChartType} options={['Bar', 'Line', 'Pie']} />
-        <div className="w-48">
-          <Input placeholder="Min sales (threshold)" value={threshold as any} onChange={(e)=>setThreshold(e.target.value ? Number(e.target.value) : '')} />
-        </div>
+        <ToggleGroup value={chartType} onChange={setChartType} options={['Bar','Line','Pie']} />
+
+        <Input
+          placeholder="Min sales"
+          value={inputValue}
+          onChange={(e)=>setInputValue(e.target.value)}
+        />
+
+        <button
+          className="bg-blue-600 text-white px-3 py-2 rounded"
+          onClick={()=>setThreshold(Number(inputValue))}
+        >
+          Filter
+        </button>
+
+        <button
+          className="bg-gray-400 text-white px-3 py-2 rounded"
+          onClick={()=>{setThreshold(''); setInputValue('');}}
+        >
+          Reset
+        </button>
       </div>
+
       <div style={{ width: '100%', height: 320 }}>
         <ResponsiveContainer>
           {chartType === 'Bar' ? (
