@@ -48,14 +48,19 @@ export default function SalesChart({ year }: { year: number }) {
     <ChartCard title={`Sales - ${year}`}>
 
       {/* controls */}
-      <div className="flex items-center gap-3 mb-4">
+      {/* ✅ ONLY UPDATED: flex-wrap added */}
+      <div className="flex flex-wrap items-center gap-3 mb-4">
+
         <ToggleGroup value={chartType} onChange={setChartType} options={['Bar','Line','Pie']} />
 
-        <Input
-          placeholder="Min sales"
-          value={inputValue}
-          onChange={(e)=>setInputValue(e.target.value)}
-        />
+        {/* ✅ ONLY ADDED: responsive width wrapper */}
+        <div className="w-32 sm:w-40 md:w-48">
+          <Input
+            placeholder="Min sales"
+            value={inputValue}
+            onChange={(e)=>setInputValue(e.target.value)}
+          />
+        </div>
 
         <button
           className="bg-blue-600 text-white px-3 py-2 rounded"
